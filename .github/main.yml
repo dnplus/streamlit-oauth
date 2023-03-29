@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Pypi
+        uses: remorses/pypi@v3
+        with:
+          username: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
