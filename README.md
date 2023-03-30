@@ -1,4 +1,5 @@
 # 🔐 Streamlit OAuth
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B61KUMV)
 
 **A simple wrap for oauth2 authorization code grant flow using httpx_oauth**
 
