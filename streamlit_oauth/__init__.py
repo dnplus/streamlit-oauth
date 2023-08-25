@@ -23,10 +23,10 @@ else:
   build_dir = os.path.join(parent_dir, "frontend/dist")
   _authorize_button = components.declare_component("authorize_button", path=build_dir)
 
-@st.cache_data(ttl=600)
+@st.cache_data(ttl=300)
 def _generate_state():
   """
-  persist state for 600 seconds (10 minutes) to keep component state hash the same
+  persist state for 300 seconds (5 minutes) to keep component state hash the same
   """
   return ''.join(random.choice(string.digits) for x in range(10))
 
