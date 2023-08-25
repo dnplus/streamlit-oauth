@@ -26,7 +26,7 @@ else:
 @st.cache_data(ttl=600)
 def _generate_state():
   """
-  persist state for 60 seconds to keep component state hash the same
+  persist state for 600 seconds (10 minutes) to keep component state hash the same
   """
   return ''.join(random.choice(string.digits) for x in range(10))
 
