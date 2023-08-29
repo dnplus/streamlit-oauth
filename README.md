@@ -91,12 +91,4 @@ Refreshes the access token using the refresh token. If the token is not expired,
 
 **Returns:**
 
-* A dictionary containing the new access token or the same access token if it has not expire
-
-## Demo
-
-![1680073018324](image/README/1680073018324.png)
-
-![1680073047458](image/README/1680073047458.png)
-
-![1680073124943](image/README/1680073124943.png)
+* A dictionary containing the new access token or the same access token if it has not expired.
