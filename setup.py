@@ -5,7 +5,7 @@ README = (Path(__file__).parent/"README.md").read_text()
 
 setuptools.setup(
     name="streamlit-oauth",
-    version="0.0.2",
+    version="0.0.3",
     author="Dylan Lu",
     author_email="",
     description="Simple OAuth2 authorization code flow for Streamlit",
