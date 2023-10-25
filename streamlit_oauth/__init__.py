@@ -41,11 +41,12 @@ class OAuth2Component:
       revoke_token_endpoint=revoke_token_endpoint,
     )
 
-  def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None):
+  def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extras_params=None):
     authorize_request = asyncio.run(self.client.get_authorization_url(
       redirect_uri=redirect_uri,
       scope=scope.split(" "),
       state=_generate_state(),
+      extras_params=extras_params
     ))
 
     # print(f'generated authorize request: {authorize_request}')
