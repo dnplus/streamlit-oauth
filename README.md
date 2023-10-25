@@ -63,7 +63,7 @@ else:
 * `refresh_token_endpoint`: The refresh token endpoint URL of the OAuth2 server.
 * `revoke_token_endpoint`: The revoke token endpoint URL of the OAuth2 server.
 
-### `authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None)`
+### `authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extra_params=None)`
 
 Generates an HTML button that initiates the OAuth2 authorization code grant flow. The button opens a popup window that prompts the user to authorize the application.
 
@@ -75,6 +75,7 @@ Generates an HTML button that initiates the OAuth2 authorization code grant flow
 * `height`: The height of the popup window.
 * `width`: The width of the popup window.
 * `key`: The unique key of the button component.
+* `extra_params`: A dictionary containing extra parameters to be sent to the authorization server.
 
 **Returns:**
 
