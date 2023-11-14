@@ -1,0 +1,16 @@
+.DS_Store
+
+# ignore build/dist folder
+/dist
+/build
+
+# ignore node_modules folder
+/node_modules
+
+# ignore .env file
+.env
+
+# egg-info
+*.egg-info
+
+__pycache__/

@@ -3,8 +3,11 @@ import "./style.css"
 
 const div = document.body.appendChild(document.createElement("div"))
 const button = div.appendChild(document.createElement("button"))
+const icon = button.appendChild(document.createElement("span"))
+const text = button.appendChild(document.createElement("span"))
 button.className = "card"
-button.textContent = "Authorize"
+icon.className = "icon"
+text.textContent = "AUTHORIZE"
 button.onclick = async () => {
   // open in popup window
   var left = (screen.width/2)-(popup_width/2);
@@ -53,10 +56,15 @@ let popup_width
 function onRender(event) {
   const data = event.detail
   authorization_url = data.args["authorization_url"]
-  let button_label = data.args["name"]
   popup_height = data.args["popup_height"]
   popup_width = data.args["popup_width"]
-  button.textContent = button_label
+  text.textContent =  data.args["name"]
+  if(data.args["icon"]) {
+    icon.style.backgroundImage = `url("${data.args["icon"]}")`
+  } else {
+    icon.style.width = "0px"
+    icon.style.height = "0px"
+  }
   console.log(`authorization_url: ${authorization_url}`)
   Streamlit.setFrameHeight()
 }

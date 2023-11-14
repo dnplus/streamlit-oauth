@@ -4,10 +4,28 @@ button {
   border-radius: 4px;
   font-weight: 600;
   margin: 0;
-  width: 200px;
-  padding: 10px 0;
+  /* width: 200px; */
+  padding: 10px 40px;
   /* box-shadow: 0 0 20px rgba(104, 85, 224, 0.2); */
   transition: 0.4s;
+  display: flex;
+  align-items: center;
+}
+
+span {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 50%;
+  display: inline-block;
 }
 
 .log {
