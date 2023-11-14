@@ -65,6 +65,10 @@ function onRender(event) {
     icon.style.width = "0px"
     icon.style.height = "0px"
   }
+  
+  if(data.args["use_container_width"]) {
+    button.style.width = "100%"
+  }
   console.log(`authorization_url: ${authorization_url}`)
   Streamlit.setFrameHeight()
 }
