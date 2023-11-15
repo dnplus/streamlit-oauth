@@ -28,7 +28,6 @@ def _generate_state(id):
   """
   persist state for 300 seconds (5 minutes) to keep component state hash the same
   """
-  # TODO: state shared across all sessions is not safe?
   return ''.join(random.choice(string.digits) for x in range(10))
 
 class OAuth2Component:
