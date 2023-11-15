@@ -75,6 +75,8 @@ Generates an HTML button that initiates the OAuth2 authorization code grant flow
 * `width`: The width of the popup window.
 * `key`: The unique key of the button component.
 * `extra_params`: A dictionary containing extra parameters to be sent to the authorization server.
+* `use_container_width`: If `True`, set the button width to the container width.
+* `icon`: The icon to be displayed on the button.
 
 **Returns:**
 
@@ -92,3 +94,14 @@ Refreshes the access token using the refresh token. If the token is not expired,
 **Returns:**
 
 * A dictionary containing the new access token or the same access token if it has not expired.
+
+### `revoke_token(self, token, token_type_hint='access_token')`
+
+**Parameters:**
+
+* `token`: The access token object to be revoked.
+* `token_type_hint`: A hint about the type of the token submitted for revocation.
+
+**Returns:**
+
+* A boolean value indicating whether the token was revoked successfully.

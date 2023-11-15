@@ -24,7 +24,7 @@ else:
   _authorize_button = components.declare_component("authorize_button", path=build_dir)
 
 @st.cache_data(ttl=300)
-def _generate_state():
+def _generate_state(id):
   """
   persist state for 300 seconds (5 minutes) to keep component state hash the same
   """
@@ -43,10 +43,11 @@ class OAuth2Component:
     )
 
   def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extras_params=None, icon=None, use_container_width=False):
+    object_id = id(self)
     authorize_request = asyncio.run(self.client.get_authorization_url(
       redirect_uri=redirect_uri,
       scope=scope.split(" "),
-      state=_generate_state(),
+      state=_generate_state(object_id),
       extras_params=extras_params
     ))
 
@@ -66,7 +67,7 @@ class OAuth2Component:
     if result:
       if 'error' in result:
         raise Exception(result)
-      if result['state'] != _generate_state():
+      if result['state'] != _generate_state(object_id):
         raise Exception("STATE DOES NOT MATCH OR OUT OF DATE")
       if 'code' in result:
         result['token'] = asyncio.run(self.client.get_access_token(result['code'], redirect_uri))
@@ -91,9 +92,9 @@ class OAuth2Component:
     """
     Revokes the token
     """
-    if token_type_hint is "access_token":
+    if token_type_hint == "access_token":
       token = token['access_token']
-    elif token_type_hint is "refresh_token":
+    elif token_type_hint == "refresh_token":
       token = token['refresh_token']
     
     asyncio.run(self.client.revoke_token(token, token_type_hint))
