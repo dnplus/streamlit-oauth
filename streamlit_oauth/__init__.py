@@ -1,12 +1,11 @@
 import os
 import streamlit.components.v1 as components
 import asyncio
-import random
-import string
 import streamlit as st
 from httpx_oauth.oauth2 import OAuth2
 import base64
 import time
+import uuid
 
 _RELEASE = False
 # comment out the following line to use the local dev server
@@ -24,29 +23,33 @@ else:
   _authorize_button = components.declare_component("authorize_button", path=build_dir)
 
 @st.cache_data(ttl=300)
-def _generate_state(id):
+def _generate_state(key=None):
   """
   persist state for 300 seconds (5 minutes) to keep component state hash the same
   """
-  return ''.join(random.choice(string.digits) for x in range(10))
+  return uuid.uuid4().hex
 
 class OAuth2Component:
-  def __init__(self, client_id, client_secret, authroize_endpoint, token_endpoint, refresh_token_endpoint, revoke_token_endpoint):
-    self.client = OAuth2(
-      client_id,
-      client_secret,
-      authroize_endpoint,
-      token_endpoint,
-      refresh_token_endpoint=refresh_token_endpoint,
-      revoke_token_endpoint=revoke_token_endpoint,
-    )
+  def __init__(self, client_id, client_secret, authroize_endpoint, token_endpoint, refresh_token_endpoint, revoke_token_endpoint, client=None):
+    if client:
+      self.client = client
+    else:
+      self.client = OAuth2(
+        client_id,
+        client_secret,
+        authroize_endpoint,
+        token_endpoint,
+        refresh_token_endpoint=refresh_token_endpoint,
+        revoke_token_endpoint=revoke_token_endpoint,
+      )
 
   def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extras_params=None, icon=None, use_container_width=False):
-    object_id = id(self)
+    # generate state based on key
+    state = _generate_state(key)
     authorize_request = asyncio.run(self.client.get_authorization_url(
       redirect_uri=redirect_uri,
       scope=scope.split(" "),
-      state=_generate_state(object_id),
+      state=state,
       extras_params=extras_params
     ))
 
@@ -66,8 +69,8 @@ class OAuth2Component:
     if result:
       if 'error' in result:
         raise Exception(result)
-      if result['state'] != _generate_state(object_id):
-        raise Exception("STATE DOES NOT MATCH OR OUT OF DATE")
+      if result['state'] != state:
+        raise Exception(f"STATE {state} DOES NOT MATCH OR OUT OF DATE")
       if 'code' in result:
         result['token'] = asyncio.run(self.client.get_access_token(result['code'], redirect_uri))
       if 'id_token' in result:
@@ -95,8 +98,11 @@ class OAuth2Component:
       token = token['access_token']
     elif token_type_hint == "refresh_token":
       token = token['refresh_token']
-    
-    asyncio.run(self.client.revoke_token(token, token_type_hint))
+    try:
+      asyncio.run(self.client.revoke_token(token, token_type_hint))
+    except:
+      # discard exception if revoke fails
+      pass
     return True
 
 if not _RELEASE:
