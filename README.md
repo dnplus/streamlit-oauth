@@ -61,6 +61,7 @@ else:
 * `token_endpoint`: The token endpoint URL of the OAuth2 server.
 * `refresh_token_endpoint`: The refresh token endpoint URL of the OAuth2 server.
 * `revoke_token_endpoint`: The revoke token endpoint URL of the OAuth2 server.
+* `client`: The httpx_oauth client to be used for the requests, default is None, if specified other arguments will be ignored.
 
 ### `authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extra_params=None)`
 
