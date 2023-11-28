@@ -11,8 +11,8 @@ st.title("OAuth2 Client Example")
 st.write("This example shows how to use the OAuth2 component to authenticate with a custom OAuth2 provider.")
 
 # create an OAuth2Component instance
-CLIENT_ID = os.environ.get("DISCORD_CLIENT_ID", "1174640935091568641")
-CLIENT_SECRET = os.environ.get("DISCORD_CLIENT_SECRET", "LvO_CXE6tq2icKSrzKrwvx0Ujp57h2YN")
+CLIENT_ID = os.environ.get("DISCORD_CLIENT_ID")
+CLIENT_SECRET = os.environ.get("DISCORD_CLIENT_SECRET")
 client = DiscordOAuth2(CLIENT_ID, CLIENT_SECRET)
 
 # create a button to start the OAuth2 flow
