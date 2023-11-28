@@ -52,6 +52,7 @@ else:
 
 ```
 
+more examples can be found in the [examples](https://github.com/dnplus/streamlit-oauth/tree/main/examples)
 
 **Parameters:**
 
