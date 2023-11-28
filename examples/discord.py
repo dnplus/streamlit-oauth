@@ -2,8 +2,8 @@ import streamlit as st
 from streamlit_oauth import OAuth2Component
 from httpx_oauth.clients.discord import DiscordOAuth2
 import os
-# import logging
 
+# import logging
 # logging.basicConfig(level=logging.DEBUG)
 
 st.title("OAuth2 Client Example")
@@ -16,7 +16,7 @@ CLIENT_SECRET = os.environ.get("DISCORD_CLIENT_SECRET")
 client = DiscordOAuth2(CLIENT_ID, CLIENT_SECRET)
 
 # create a button to start the OAuth2 flow
-oauth2 = OAuth2Component(None, None, None, None, None, None, client=client)
+oauth2 = OAuth2Component(client=client)
 
 if "discord_token" not in st.session_state:
     result = oauth2.authorize_button(
