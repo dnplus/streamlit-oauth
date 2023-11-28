@@ -69,8 +69,8 @@ class OAuth2Component:
     if result:
       if 'error' in result:
         raise Exception(result)
-      if result['state'] != state:
-        raise Exception(f"STATE {state} DOES NOT MATCH OR OUT OF DATE")
+      if 'state' in result and result['state'] != state:
+          raise Exception(f"STATE {state} DOES NOT MATCH OR OUT OF DATE")
       if 'code' in result:
         result['token'] = asyncio.run(self.client.get_access_token(result['code'], redirect_uri))
       if 'id_token' in result:
