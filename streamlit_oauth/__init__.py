@@ -30,14 +30,16 @@ def _generate_state(key=None):
   return uuid.uuid4().hex
 
 class OAuth2Component:
-  def __init__(self, client_id=None, client_secret=None, authroize_endpoint=None, token_endpoint=None, refresh_token_endpoint=None, revoke_token_endpoint=None, client=None):
+  def __init__(self, client_id=None, client_secret=None, authroize_endpoint=None, token_endpoint=None, refresh_token_endpoint=None, revoke_token_endpoint=None, client=None, *, authorize_endpoint=None):
+    # Handle typo in backwards-compatible way
+    authorize_endpoint = authorize_endpoint or authroize_endpoint
     if client:
       self.client = client
     else:
       self.client = OAuth2(
         client_id,
         client_secret,
-        authroize_endpoint,
+        authorize_endpoint,
         token_endpoint,
         refresh_token_endpoint=refresh_token_endpoint,
         revoke_token_endpoint=revoke_token_endpoint,

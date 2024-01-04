@@ -58,7 +58,8 @@ more examples can be found in the [examples](https://github.com/dnplus/streamlit
 
 * `client_id`: The OAuth2 client id provided by the authorization server.
 * `client_secret`: The OAuth2 client secret provided by the authorization server.
-* `authroize_endpoint`: The authorization endpoint URL of the OAuth2 server.
+* `authroize_endpoint`: The authorization endpoint URL of the OAuth2 server. (Deprecated for typo.)
+* `authorize_endpoint`: The authorization endpoint URL of the OAuth2 server.
 * `token_endpoint`: The token endpoint URL of the OAuth2 server.
 * `refresh_token_endpoint`: The refresh token endpoint URL of the OAuth2 server.
 * `revoke_token_endpoint`: The revoke token endpoint URL of the OAuth2 server.
