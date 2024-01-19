@@ -22,6 +22,12 @@ else:
   build_dir = os.path.join(parent_dir, "frontend/dist")
   _authorize_button = components.declare_component("authorize_button", path=build_dir)
 
+
+class StreamlitOauthError:
+  """
+  Exception raised from streamlit-oauth.
+  """
+
 @st.cache_data(ttl=300)
 def _generate_state(key=None):
   """
@@ -70,9 +76,9 @@ class OAuth2Component:
 
     if result:
       if 'error' in result:
-        raise Exception(result)
+        raise StreamlitOauthError(result)
       if 'state' in result and result['state'] != state:
-          raise Exception(f"STATE {state} DOES NOT MATCH OR OUT OF DATE")
+        raise StreamlitOauthError(f"STATE {state} DOES NOT MATCH OR OUT OF DATE")
       if 'code' in result:
         result['token'] = asyncio.run(self.client.get_access_token(result['code'], redirect_uri))
       if 'id_token' in result:
