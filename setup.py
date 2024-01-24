@@ -1,11 +1,11 @@
 import setuptools
 from pathlib import Path
 
-README = (Path(__file__).parent/"README.md").read_text()
+README = (Path(__file__).parent/"README.md").read_text(encoding="utf8")
 
 setuptools.setup(
     name="streamlit-oauth",
-    version="0.1.5",
+    version="0.1.6b1",
     author="Dylan Lu",
     author_email="dnplus@gmail.com",
     description="Simple OAuth2 authorization code flow for Streamlit",
