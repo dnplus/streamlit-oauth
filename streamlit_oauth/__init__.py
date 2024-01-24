@@ -6,6 +6,9 @@ from httpx_oauth.oauth2 import OAuth2
 import base64
 import time
 import uuid
+import hashlib
+import base64
+import secrets
 
 _RELEASE = False
 # comment out the following line to use the local dev server
@@ -29,6 +32,17 @@ def _generate_state(key=None):
   """
   return uuid.uuid4().hex
 
+@st.cache_data(ttl=300)
+def _generate_pkce_pair(pkce):
+  """
+  generate code_verifier and code_challenge for PKCE
+  """
+  if pkce != "S256":
+    raise Exception("Only S256 is supported")
+  code_verifier = secrets.token_urlsafe(100)
+  code_challenge = base64.urlsafe_b64encode(hashlib.sha256(code_verifier.encode()).digest()).decode().replace("=", "")
+  return code_verifier, code_challenge
+
 class OAuth2Component:
   def __init__(self, client_id=None, client_secret=None, authroize_endpoint=None, token_endpoint=None, refresh_token_endpoint=None, revoke_token_endpoint=None, client=None, *, authorize_endpoint=None):
     # Handle typo in backwards-compatible way
@@ -45,7 +59,10 @@ class OAuth2Component:
         revoke_token_endpoint=revoke_token_endpoint,
       )
 
-  def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extras_params=None, icon=None, use_container_width=False):
+  def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, pkce=None, extras_params=None, icon=None, use_container_width=False):
+    if pkce:
+      code_verifier, code_challenge = _generate_pkce_pair(pkce)
+      extras_params = {**extras_params, "code_challenge": code_challenge, "code_challenge_method": pkce}
     # generate state based on key
     state = _generate_state(key)
     authorize_request = asyncio.run(self.client.get_authorization_url(
@@ -74,7 +91,14 @@ class OAuth2Component:
       if 'state' in result and result['state'] != state:
           raise Exception(f"STATE {state} DOES NOT MATCH OR OUT OF DATE")
       if 'code' in result:
-        result['token'] = asyncio.run(self.client.get_access_token(result['code'], redirect_uri))
+        args = {
+          'code': result['code'],
+          'redirect_uri': redirect_uri,
+        }
+        if pkce:
+          args['code_verifier'] = code_verifier
+        
+        result['token'] = asyncio.run(self.client.get_access_token(**args))
       if 'id_token' in result:
         # TODO: verify id_token
         result['id_token'] = base64.b64decode(result['id_token'].split('.')[1] + '==')
