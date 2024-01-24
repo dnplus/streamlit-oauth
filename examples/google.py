@@ -29,8 +29,9 @@ if "auth" not in st.session_state:
         key="google",
         extras_params={"prompt": "consent", "access_type": "offline"},
         use_container_width=True,
+        pkce='S256',
     )
-
+    
     if result:
         st.write(result)
         # decode the id_token jwt and get the user's email address
