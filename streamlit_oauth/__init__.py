@@ -59,7 +59,7 @@ class OAuth2Component:
         revoke_token_endpoint=revoke_token_endpoint,
       )
 
-  def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, pkce=None, extras_params=None, icon=None, use_container_width=False):
+  def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, pkce=None, extras_params={}, icon=None, use_container_width=False):
     if pkce:
       code_verifier, code_challenge = _generate_pkce_pair(pkce)
       extras_params = {**extras_params, "code_challenge": code_challenge, "code_challenge_method": pkce}
