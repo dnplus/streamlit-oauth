@@ -26,7 +26,7 @@ else:
   _authorize_button = components.declare_component("authorize_button", path=build_dir)
 
 
-class StreamlitOauthError:
+class StreamlitOauthError(Exception):
   """
   Exception raised from streamlit-oauth.
   """
