@@ -49,6 +49,6 @@ else:
     st.write("You are logged in!")
     st.write(st.session_state["auth"])
     st.write(st.session_state["token"])
-    st.button("Logout")
-    del st.session_state["auth"]
-    del st.session_state["token"]
+    if st.button("Logout"):
+        del st.session_state["auth"]
+        del st.session_state["token"]
