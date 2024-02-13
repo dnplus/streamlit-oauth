@@ -45,7 +45,7 @@ def _generate_pkce_pair(pkce):
   """
   if pkce != "S256":
     raise Exception("Only S256 is supported")
-  code_verifier = secrets.token_urlsafe(100)
+  code_verifier = secrets.token_urlsafe(96)
   code_challenge = base64.urlsafe_b64encode(hashlib.sha256(code_verifier.encode()).digest()).decode().replace("=", "")
   return code_verifier, code_challenge
 
