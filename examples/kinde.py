@@ -12,7 +12,6 @@ st.write("This example shows how to use the raw OAuth2 component to authenticate
 
 # create an OAuth2Component instance
 CLIENT_ID = os.environ.get("KINDE_CLIENT_ID")
-CLIENT_SECRET = os.environ.get("KINDE_CLIENT_SECRET")
 KINDE_DOMAIN = os.environ.get("KINDE_DOMAIN")
 AUTHORIZE_ENDPOINT = f"https://{KINDE_DOMAIN}/oauth2/auth"
 TOKEN_ENDPOINT = f"https://{KINDE_DOMAIN}/oauth2/token"
