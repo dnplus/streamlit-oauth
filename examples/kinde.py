@@ -20,7 +20,7 @@ REVOKE_ENDPOINT = f"https://{KINDE_DOMAIN}/oauth2/revoke"
 
 if "auth" not in st.session_state:
     # create a button to start the OAuth2 flow
-    oauth2 = OAuth2Component(CLIENT_ID, CLIENT_SECRET, AUTHORIZE_ENDPOINT, TOKEN_ENDPOINT, TOKEN_ENDPOINT, REVOKE_ENDPOINT)
+    oauth2 = OAuth2Component(client_id=CLIENT_ID, authorize_endpoint=AUTHORIZE_ENDPOINT, token_endpoint=TOKEN_ENDPOINT, refresh_token_endpoint=TOKEN_ENDPOINT, revoke_token_endpoint=REVOKE_ENDPOINT)
     result = oauth2.authorize_button(
         name="Continue with Kinde",
         icon="https://kinde.com/icon.svg",
