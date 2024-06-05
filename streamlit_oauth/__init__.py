@@ -13,7 +13,7 @@ import secrets
 _RELEASE = False
 # comment out the following line to use the local dev server
 # use streamlit run __init__.py --server.enableCORS=false to run the local dev server
-# _RELEASE = True
+_RELEASE = True
 
 if not _RELEASE:
   _authorize_button = components.declare_component(
