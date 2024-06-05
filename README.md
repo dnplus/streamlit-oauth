@@ -81,6 +81,7 @@ Generates an HTML button that initiates the OAuth2 authorization code grant flow
 * `pkce`: accept value `S256` indicating whether to use PKCE (Proof Key for Code Exchange) for the authorization code grant flow.
 * `use_container_width`: If `True`, set the button width to the container width.
 * `icon`: The icon to be displayed on the button.
+* `auto_click`: If `True`, the button will be clicked automatically.
 
 **Returns:**
 

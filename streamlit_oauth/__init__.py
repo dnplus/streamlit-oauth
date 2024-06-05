@@ -13,7 +13,7 @@ import secrets
 _RELEASE = False
 # comment out the following line to use the local dev server
 # use streamlit run __init__.py --server.enableCORS=false to run the local dev server
-_RELEASE = True
+# _RELEASE = True
 
 if not _RELEASE:
   _authorize_button = components.declare_component(
@@ -65,7 +65,7 @@ class OAuth2Component:
         revoke_token_endpoint=revoke_token_endpoint,
       )
 
-  def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, pkce=None, extras_params={}, icon=None, use_container_width=False):
+  def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, pkce=None, extras_params={}, icon=None, use_container_width=False, auto_click=False):
     if pkce:
       code_verifier, code_challenge = _generate_pkce_pair(pkce)
       extras_params = {**extras_params, "code_challenge": code_challenge, "code_challenge_method": pkce}
@@ -88,6 +88,7 @@ class OAuth2Component:
       key=key,
       icon=icon,
       use_container_width=use_container_width,
+      auto_click=auto_click,
     )
     # print(f'result: {result}')
 
