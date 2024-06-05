@@ -5,7 +5,6 @@ const div = document.body.appendChild(document.createElement("div"))
 const button = div.appendChild(document.createElement("button"))
 const icon = button.appendChild(document.createElement("span"))
 const text = button.appendChild(document.createElement("span"))
-button.className = "card"
 icon.className = "icon"
 text.textContent = "AUTHORIZE"
 button.onclick = async () => {
@@ -69,6 +68,12 @@ function onRender(event) {
   if(data.args["use_container_width"]) {
     button.style.width = "100%"
   }
+
+  if(data.args["auto_click"] && !window.opener && !window.clicked) {
+    button.click()
+    window.clicked = true
+  }
+
   console.log(`authorization_url: ${authorization_url}`)
   Streamlit.setFrameHeight()
 }
