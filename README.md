@@ -1,10 +1,10 @@
-# 🔐 Streamlit OAuth: Enhance Your Data Apps with Seamless Authentication
+# 🔐 Streamlit OAuth: Enhance Your Data Apps with Seamless Integration
 
 **Effortlessly integrate OAuth2 authorization into your Streamlit apps using the streamlined httpx_oauth wrapper**
 
 ## Why Streamlit OAuth?
 
-In today's digital landscape, authentication is crucial for accessing and utilizing data from various applications. With Streamlit OAuth, you can easily incorporate OAuth2 authorization into your Streamlit data apps, allowing you to securely and efficiently fetch data from other applications. This powerful integration unlocks the full potential of your Streamlit data-driven applications, enabling you to create more dynamic and interactive user experiences.
+In today's digital landscape, authorization is crucial for accessing and utilizing data from various applications. With Streamlit OAuth, you can easily incorporate OAuth2 authorization into your Streamlit data apps, allowing you to securely and efficiently fetch data from other applications. This powerful integration unlocks the full potential of your Streamlit data-driven applications, enabling you to create more dynamic and interactive user experiences.
 
 ## Installation
 
