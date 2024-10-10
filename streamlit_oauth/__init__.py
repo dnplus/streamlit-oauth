@@ -2,7 +2,7 @@ import os
 import streamlit.components.v1 as components
 import asyncio
 import streamlit as st
-from httpx_oauth.oauth2 import OAuth2
+from httpx_oauth.oauth2 import OAuth2, OAuth2ClientAuthMethod
 import base64
 import time
 import uuid
@@ -56,7 +56,7 @@ def _generate_pkce_pair(pkce, key=None):
   return st.session_state[pkce_key]
 
 class OAuth2Component:
-  def __init__(self, client_id=None, client_secret=None, authroize_endpoint=None, token_endpoint=None, refresh_token_endpoint=None, revoke_token_endpoint=None, client=None, *, authorize_endpoint=None):
+  def __init__(self, client_id=None, client_secret=None, authroize_endpoint=None, token_endpoint=None, refresh_token_endpoint=None, revoke_token_endpoint=None, client=None, *, authorize_endpoint=None, token_endpoint_auth_method: OAuth2ClientAuthMethod = "client_secret_basic", revocation_endpoint_auth_method: OAuth2ClientAuthMethod = "client_secret_basic"):
     # Handle typo in backwards-compatible way
     authorize_endpoint = authorize_endpoint or authroize_endpoint
     if client:
@@ -69,6 +69,8 @@ class OAuth2Component:
         token_endpoint,
         refresh_token_endpoint=refresh_token_endpoint,
         revoke_token_endpoint=revoke_token_endpoint,
+        token_endpoint_auth_method=token_endpoint_auth_method,
+        revocation_endpoint_auth_method=revocation_endpoint_auth_method,
       )
 
   def authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, pkce=None, extras_params={}, icon=None, use_container_width=False, auto_click=False):

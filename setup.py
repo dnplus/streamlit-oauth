@@ -5,7 +5,7 @@ README = (Path(__file__).parent/"README.md").read_text(encoding="utf8")
 
 setuptools.setup(
     name="streamlit-oauth",
-    version="0.1.12",
+    version="0.1.13",
     author="Dylan Lu",
     author_email="dnplus@gmail.com",
     description="Simple OAuth2 authorization code flow for Streamlit",
@@ -22,7 +22,7 @@ setuptools.setup(
         # If your component has other Python dependencies, list
         # them here.
         "streamlit>=1.28.1",
-        "httpx-oauth==0.14.1",
+        "httpx-oauth==0.15.1",
         "python-dotenv==1.0.1"
     ],
 )
