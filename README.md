@@ -1,4 +1,5 @@
 # 🔐 Streamlit OAuth: Enhance Your Data Apps with Seamless Integration
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://g-openid-demo.streamlit.app/)
 
 **Effortlessly integrate OAuth2 authorization into your Streamlit apps using the streamlined httpx_oauth wrapper**
 
