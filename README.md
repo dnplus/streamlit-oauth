@@ -70,7 +70,7 @@ more examples can be found in the [examples](https://github.com/dnplus/streamlit
 * `revoke_token_endpoint`: The revoke token endpoint URL of the OAuth2 server.
 * `client`: The httpx_oauth client to be used for the requests, default is None, if specified other arguments will be ignored.
 
-### `authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extra_params={}, pkce=None, use_container_width=False, icon=None)`
+### `authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extras_params={}, pkce=None, use_container_width=False, icon=None)`
 
 Generates an HTML button that initiates the OAuth2 authorization code grant flow. The button opens a popup window that prompts the user to authorize the application.
 
