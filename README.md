@@ -1,7 +1,7 @@
 # 🔐 Streamlit OAuth: Enhance Your Data Apps with Seamless Integration
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://g-openid-demo.streamlit.app/)
 
-**Effortlessly integrate OAuth2 authorization into your Streamlit apps using the streamlined httpx_oauth wrapper**
+**Effortlessly integrate OAuth2 authorization into your Streamlit apps using the powerful Authlib integration**
 
 ## Why Streamlit OAuth?
 
@@ -68,9 +68,9 @@ more examples can be found in the [examples](https://github.com/dnplus/streamlit
 * `token_endpoint`: The token endpoint URL of the OAuth2 server.
 * `refresh_token_endpoint`: The refresh token endpoint URL of the OAuth2 server.
 * `revoke_token_endpoint`: The revoke token endpoint URL of the OAuth2 server.
-* `client`: The httpx_oauth client to be used for the requests, default is None, if specified other arguments will be ignored.
+* `client`: The authlib client to be used for the requests, default is None, if specified other arguments will be ignored.
 
-### `authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extra_params={}, pkce=None, use_container_width=False, icon=None)`
+### `authorize_button(self, name, redirect_uri, scope, height=800, width=600, key=None, extra_params=None, pkce=None, use_container_width=False, icon=None, auto_click=False)`
 
 Generates an HTML button that initiates the OAuth2 authorization code grant flow. The button opens a popup window that prompts the user to authorize the application.
 
