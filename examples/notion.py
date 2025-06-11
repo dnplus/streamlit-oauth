@@ -86,5 +86,6 @@ if "notion_token" not in st.session_state:
 else:
     st.write("You are logged in!")
     st.write(st.session_state["notion_token"])
-    st.button("Logout")
-    del st.session_state["notion_token"]
+    if st.button("Logout"):
+        del st.session_state["notion_token"]
+        st.rerun()
