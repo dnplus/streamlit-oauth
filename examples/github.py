@@ -60,5 +60,6 @@ if "github_credentials" not in st.session_state:
 else:
     st.write("You are logged in!")
     st.write(st.session_state["github_credentials"])
-    st.button("Logout")
-    del st.session_state["github_credentials"]
+    if st.button("Logout"):
+        del st.session_state["github_credentials"]
+        st.rerun()
