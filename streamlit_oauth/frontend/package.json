@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^6.2.3"
+    "vite": "^6.2.7"
   },
   "dependencies": {
     "streamlit-component-lib": "^1.4.0",
