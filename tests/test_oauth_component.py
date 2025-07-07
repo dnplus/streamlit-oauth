@@ -48,6 +48,7 @@ def test_refresh_token_expired(monkeypatch):
     result = oauth.refresh_token(token)
 
     assert result["access_token"] == "new"
+    assert "refresh_token" in result
 
 
 def test_revoke_token(monkeypatch):
