@@ -59,3 +59,12 @@ def test_revoke_token(monkeypatch):
 
     assert oauth.revoke_token({"access_token": "abc"}) is True
     revoke_mock.assert_awaited_once()
+
+def test_revoke_token_failure(monkeypatch):
+    client = OAuth2("id", "secret", "auth", "token")
+    oauth = OAuth2Component(client=client)
+    revoke_mock = AsyncMock(side_effect=Exception("Revoke failed"))
+    monkeypatch.setattr(oauth.client, "revoke_token", revoke_mock)
+
+    with pytest.raises(StreamlitOauthError, match="Failed to revoke token: Revoke failed"):
+        oauth.revoke_token({"access_token": "abc"})
