@@ -1,6 +1,7 @@
 import os
 import streamlit.components.v1 as components
 import asyncio
+import functools
 import streamlit as st
 from httpx_oauth.oauth2 import OAuth2, OAuth2ClientAuthMethod
 import base64
@@ -55,6 +56,13 @@ def _generate_pkce_pair(pkce, key=None):
     st.session_state[pkce_key] = (code_verifier, code_challenge)
   return st.session_state[pkce_key]
 
+@functools.lru_cache(maxsize=128)
+def _split_scope(scope):
+  """
+  Split scope string by space and cache the result.
+  """
+  return tuple(scope.split(" "))
+
 class OAuth2Component:
   def __init__(self, client_id=None, client_secret=None, authroize_endpoint=None, token_endpoint=None, refresh_token_endpoint=None, revoke_token_endpoint=None, client=None, *, authorize_endpoint=None, token_endpoint_auth_method: OAuth2ClientAuthMethod = "client_secret_basic", revocation_endpoint_auth_method: OAuth2ClientAuthMethod = "client_secret_basic"):
     # Handle typo in backwards-compatible way
@@ -82,7 +90,7 @@ class OAuth2Component:
 
     authorize_request = asyncio.run(self.client.get_authorization_url(
       redirect_uri=redirect_uri,
-      scope=scope.split(" "),
+      scope=_split_scope(scope),
       state=state,
       extras_params=extras_params
     ))
