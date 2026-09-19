@@ -1,5 +1,8 @@
 import os
+import logging
 import streamlit.components.v1 as components
+
+logger = logging.getLogger(__name__)
 import asyncio
 import streamlit as st
 from httpx_oauth.oauth2 import OAuth2, OAuth2ClientAuthMethod
@@ -151,9 +154,9 @@ class OAuth2Component:
       token = token['refresh_token']
     try:
       asyncio.run(self.client.revoke_token(token, token_type_hint))
-    except:
-      # discard exception if revoke fails
-      pass
+    except Exception as e:
+      logger.error(f"Failed to revoke token: {e}")
+      raise StreamlitOauthError(f"Failed to revoke token: {e}") from e
     return True
 
 if not _RELEASE:
