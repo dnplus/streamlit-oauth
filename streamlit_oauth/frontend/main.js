@@ -13,13 +13,14 @@ button.onclick = async () => {
   var top = (screen.height/2)-(popup_height/2);
   const popup = window.open(authorization_url, "oauthWidget", `toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, copyhistory=no,width=${popup_width},height=${popup_height},top=${top},left=${left}`)
   popup.focus()
+
+  const redirect_uri = new URLSearchParams(authorization_url).get("redirect_uri")
+
   // check for popup close
   let qs = await new Promise((resolve, reject) => {
     const interval = setInterval(() => {
       try {
-        let redirect_uri = new URLSearchParams(authorization_url).get("redirect_uri")
         let popup_url = (new URL(popup.location.href)).toString()
-        let urlParams = new URLSearchParams(popup.location.search)
 
         // if popup url not redirect_uri, wait for redirect to complete 
         if (!popup_url.startsWith(redirect_uri)) {
@@ -27,6 +28,7 @@ button.onclick = async () => {
         }
 
         // if popup url is redirect_uri, close popup and return query string
+        let urlParams = new URLSearchParams(popup.location.search)
         popup.close()
         clearInterval(interval)
         let result = {}
