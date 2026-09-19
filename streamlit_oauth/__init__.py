@@ -130,15 +130,17 @@ class OAuth2Component:
     """
     Returns a refreshed token if the token is expired, otherwise returns the same token
     """
-    if force or token.get('expires_at') and token['expires_at'] < time.time():
-      if token.get('refresh_token') is None:
+    expires_at = token.get('expires_at')
+    if force or (expires_at and expires_at < time.time()):
+      refresh_token = token.get('refresh_token')
+      if refresh_token is None:
         raise Exception("Token is expired and no refresh token is available")
-      else:
-        new_token = asyncio.run(self.client.refresh_token(token.get('refresh_token')))
-        # Keep the old refresh token if the new one is missing it
-        if not new_token.get('refresh_token'):
-          new_token['refresh_token'] = token.get('refresh_token')
-        token = new_token
+
+      new_token = asyncio.run(self.client.refresh_token(refresh_token))
+      # Keep the old refresh token if the new one is missing it
+      if not new_token.get('refresh_token'):
+        new_token['refresh_token'] = refresh_token
+      token = new_token
     return token
   
   def revoke_token(self, token, token_type_hint="access_token"):
