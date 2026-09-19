@@ -1,5 +1,4 @@
-import requests
-
+import httpx
 import streamlit as st
 from streamlit_oauth import OAuth2Component
 import os
@@ -13,6 +12,15 @@ JIRA_OAUTH_CLIENT_SECRET        = os.getenv("JIRA_OAUTH_CLIENT_SECRET")
 JIRA_OAUTH_AUTHORIZATION_URL    = os.getenv("JIRA_OAUTH_AUTHORIZATION_URL")
 JIRA_OAUTH_TOKEN_URL            = os.getenv("JIRA_OAUTH_TOKEN_URL")
 JIRA_OAUTH_REDIRECT_URI         = os.getenv("JIRA_OAUTH_REDIRECT_URI")
+
+@st.cache_data(show_spinner="Fetching accessible resources...")
+def get_accessible_resources(access_token):
+    url = "https://api.atlassian.com/oauth/token/accessible-resources"
+    headers = {"Authorization": f"Bearer {access_token}"}
+    with httpx.Client() as client:
+        response = client.get(url, headers=headers)
+        response.raise_for_status()
+        return response.json()
 
 if "auth" not in st.session_state:
     #  create a button to start the OAuth2 flow
@@ -31,36 +39,17 @@ if "auth" not in st.session_state:
         extras_params       = {"audience": "api.atlassian.com", "response_type": "code", "prompt": "consent" }
     )
 
-    # result_jira will receive the following JSON, in which we use the access_token
-    # to make requests to the Atlassian API, according to the permissions granted
-    # according to the documentation.
-    # {
-    #     "state": "...",
-    #     "code": "...",
-    #     "token": {
-    #         "access_token": "...",
-    #         "expires_in": 3600,
-    #         "token_type": "Bearer",
-    #         "scope": "read:jira-user",
-    #         "expires_at": ...
-    #     }
-    # }
-
     if result_jira:
         st.write(result_jira)
         access_token = result_jira["token"]["access_token"]
         st.session_state["auth"] = access_token
 
         # Optiona: Here you can make calls to the API using the access token, for your purposes.
-        url = "https://api.atlassian.com/oauth/token/accessible-resources"
-        headers = {"Authorization": f"Bearer {access_token}"}
-        response = requests.get(url, headers = headers)
-
-        if response.status_code == 200:
-            st.write(response.json())
-        else:
-            st.write("Error: Failed to get accessible resources")
-
+        try:
+            resources = get_accessible_resources(access_token)
+            st.write(resources)
+        except Exception as e:
+            st.error(f"Error: Failed to get accessible resources: {e}")
 
     else:
         st.write("You are not logged in!")
@@ -70,3 +59,9 @@ else:
     st.write("You are logged in!")
     st.write(st.session_state["auth"])
 
+    if st.button("Fetch Resources"):
+        try:
+            resources = get_accessible_resources(st.session_state["auth"])
+            st.write(resources)
+        except Exception as e:
+            st.error(f"Error: Failed to get accessible resources: {e}")
