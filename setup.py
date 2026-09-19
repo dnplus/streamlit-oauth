@@ -23,6 +23,7 @@ setuptools.setup(
         # them here.
         "streamlit>=1.28.1",
         "httpx-oauth==0.15.1",
+        "httpx>=0.24.0",
         "python-dotenv==1.0.1"
     ],
 )
