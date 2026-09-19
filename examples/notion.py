@@ -27,6 +27,7 @@ class NotionOAuth2(BaseOAuth2):
             NOTION_OAUTH2_TOKEN_URL,
             **kwargs,
         )
+        self.basic_auth = base64.b64encode(f"{client_id}:{client_secret}".encode("ascii")).decode("ascii")
 
     # override get_access_token to use Notion's custom OAuth2 flow
     async def get_access_token(
@@ -38,11 +39,8 @@ class NotionOAuth2(BaseOAuth2):
             "code": code,
             "redirect_uri": redirect_uri,
             }
-            basic_auth = self.client_id + ":" + self.client_secret
-            # base64 encode the basic auth string
-            basic_auth = base64.b64encode(basic_auth.encode("ascii")).decode("ascii")
             headers = {
-                "Authorization": f"Basic {basic_auth}",
+                "Authorization": f"Basic {self.basic_auth}",
                 "Content-Type": "application/json",
             }
             response = await client.post(self.access_token_endpoint, headers=headers, json=data) 
