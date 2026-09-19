@@ -102,11 +102,8 @@ class OAuth2Component:
     # print(f'result: {result}')
 
     if result:
-      try:
-        del st.session_state[f'state-{key}']
-        del st.session_state[f'pkce-{key}'] 
-      except:
-        pass
+      st.session_state.pop(f'state-{key}', None)
+      st.session_state.pop(f'pkce-{key}', None)
       if 'error' in result:
         raise StreamlitOauthError(result)
       if 'state' in result and result['state'] != state:
