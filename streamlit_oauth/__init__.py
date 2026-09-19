@@ -5,7 +5,6 @@ import streamlit as st
 from httpx_oauth.oauth2 import OAuth2, OAuth2ClientAuthMethod
 import base64
 import time
-import uuid
 import hashlib
 import base64
 import secrets
@@ -38,7 +37,7 @@ def _generate_state(key=None):
   state_key = f"state-{key}"
   
   if not st.session_state.get(state_key):
-    st.session_state[state_key] = uuid.uuid4().hex
+    st.session_state[state_key] = secrets.token_hex(16)
   return st.session_state[state_key]
 
 def _generate_pkce_pair(pkce, key=None):
